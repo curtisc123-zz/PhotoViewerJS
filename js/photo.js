@@ -7,7 +7,7 @@ var PhotoViewerPlugin = (function( document, pv ) {
   ////////////////////////////////////////
 
   var images = [];
-  var imageLinks = [];
+  var currentLoadedImage;
 
   var PhotoGallery;
   var PhotoViewer;
@@ -27,13 +27,19 @@ var PhotoViewerPlugin = (function( document, pv ) {
   pv.Initialize = function () {
 
     Init();
-    SetLinkListeners();
+    SetImageLinkListeners();
+
+    PhotoViewerClose.addEventListener('click', ClosePhotoViewer);
+    PhotoViewerNextImage.addEventListener('click', LoadNextImage);
+    PhotoViewerPreviousImage.addEventListener('click', LoadPreviousImage);
   }
 
   // Private Methods 
   ////////////////////////////////////////
 
   var Init = function () {
+    images = [];
+
     PhotoGallery = document.getElementById("PhotoGallery");
     PhotoViewer = document.getElementById("PhotoViewer");
 
@@ -49,22 +55,26 @@ var PhotoViewerPlugin = (function( document, pv ) {
 
   var GetPhotos = function () {
     var imageTags;
-    imageTags = PhotoGallery.getElementsByTagName("img");
 
-    for(var i = 0; i < imageTags.length; i++) {
-      var image = {
-        imageSrc: imageTags[i].src,
-        imageTitle: imageTags[i].title
+    if(images.length > 0) {
+      return;
+    } 
+    else {
+      imageTags = PhotoGallery.getElementsByTagName("img");
+      for(var i = 0; i < imageTags.length; i++) {
+        var image = {
+          imageIndex: i,
+          imageSrc: imageTags[i].src,
+          imageTitle: imageTags[i].title
+        }
+        images.push(image);
       }
-
-      images.push(image);
+      
     }
-
-    console.log(images);
   }
 
-  var SetLinkListeners = function () {
-    imageLinks = PhotoGallery.getElementsByTagName("a");
+  var SetImageLinkListeners = function () {
+    var imageLinks = PhotoGallery.getElementsByTagName("a");
     for(i = 0; i < imageLinks.length; i++) {
       imageLinks[i].addEventListener("click", ImageOpen);
     }
@@ -72,19 +82,25 @@ var PhotoViewerPlugin = (function( document, pv ) {
 
   var ImageOpen = function (e) {
     e.preventDefault();
-
-    InitializePhotoViewer();
+    InitializePhotoViewer(this.href);
   }
 
-  var InitializePhotoViewer = function () {
+  var InitializePhotoViewer = function (clickedImage) {
     GetPhotos();
-
-    PhotoViewer.className += PHOTO_VIEWER_VISIBLE;
-    SetPhotoViewerPhoto();
+    for(var i = 0; i < images.length; i++) {
+      if(images[i].hasOwnProperty('imageSrc')) {
+        if(images[i].imageSrc == clickedImage) {
+          OpenPhotoViewer(images[i]);   
+        }
+      }
+    }
   }
 
-  var SetPhotoViewerPhoto = function () {
-    // you were doing stuff here
+  var SetPhotoViewerPhoto = function (currentImage) {
+    PhotoViewerCurrentImage.setAttribute('src', currentImage.imageSrc);
+    PhotoViewerTitle.innerHTML = currentImage.imageTitle;
+    PhotoViewerCount.innerHTML = currentImage.imageIndex + 1 + '/' + images.length;
+    currentLoadedImage = currentImage.imageIndex;
   }
 
   var ToggleLoading = function (display) {
@@ -96,6 +112,34 @@ var PhotoViewerPlugin = (function( document, pv ) {
     }
   }
 
+  var OpenPhotoViewer = function(clickedImage) {
+    PhotoViewer.className += PHOTO_VIEWER_VISIBLE;
+    SetPhotoViewerPhoto(clickedImage);
+  }
+
+  var ClosePhotoViewer = function(e) {
+    e.preventDefault();
+    PhotoViewer.className = PHOTO_VIEWER;
+  }
+
+  var LoadNextImage = function(e) {
+    e.preventDefault();
+    if (currentLoadedImage >= images.length - 1 ) {
+      return;
+    }
+
+    SetPhotoViewerPhoto(images[currentLoadedImage + 1]);
+  }
+
+  var LoadPreviousImage = function(e) {
+    e.preventDefault();
+    if (currentLoadedImage <= 0) {
+      return;
+    }
+
+    SetPhotoViewerPhoto(images[currentLoadedImage - 1]);
+  }
+
   // CONSTANTS
   ////////////////////////////////////////
 
@@ -103,12 +147,11 @@ var PhotoViewerPlugin = (function( document, pv ) {
   var DEFINE_BY_GALLERY = "gallery";
 
   var PHOTO_VIEWER_VISIBLE = " photo-viewer--visible";
+  var PHOTO_VIEWER = "photo-viewer";
 
   return pv;
 
 }(document, PhotoViewerPlugin || {}));
-
-
 
 document.addEventListener("DOMContentLoaded", function(event) {
   

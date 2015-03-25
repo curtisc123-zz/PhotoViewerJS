@@ -99,14 +99,9 @@ Viewer
 
 .photo-viewer--title {
   width: 100%;
-  height: 60px;
+  height: 6%;
 
   background: rgba(0,0,0,0.75);
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 20;
 }
 
 .photo-viewer--title h1 {
@@ -137,12 +132,27 @@ Viewer
   line-height: 40px;
 }
 
-.photo-viewer--current-image {
-  width: auto;
-  height: 80%;
-  margin: 0 auto;
+.photo-viewer--container {
+  height: 88%;
+  white-space: nowrap;
+}
 
+.photo-viewer--current-image {
+  width: 100%;
+  height: 100%;
+  line-height: 1px;
+  display: inline-block;
   text-align: center;
+  margin: 0;
+}
+
+.photo-viewer--current-image:before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+  margin-right: -1px;
+  vertical-align: middle;
 }
 
 .photo-viewer--current-image img {
@@ -150,19 +160,17 @@ Viewer
   height: auto;
   max-width: 100%;
   max-height: 100%;
+
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .photo-viewer--controls {
   width: 100%;
-  height: 60px;
+  height: 6%;
   padding: 0 20px;
 
   background: rgba(0,0,0,0.75);
-
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 20;
 
   color: #FFF;
   font-size: 1.2rem;
