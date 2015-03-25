@@ -1,0 +1,191 @@
+/**
+===========================================================
+Photo Viewer
+By Curtis Campbell
+Version 0.1
+March 24, 2015
+===========================================================
+**/
+
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 62.5%;
+  font-family: 'Arial';
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+a:hover {
+  color: orange;
+}
+
+/**
+========================================
+Gallery
+========================================
+**/
+
+.photo-gallery {
+  width: 100%;
+  height: auto;
+
+  position: relative;
+  z-index: 1;
+}
+
+.photo-gallery:after {
+  content: '';
+  display: table;
+  clear: both;
+  width: 100%;
+}
+
+.photo-gallery .photo-gallery--image {
+  width: 300px;
+  height: 300px;
+  margin: 0;
+  overflow: hidden;
+
+  float: left;
+  position: relative;
+  z-index: 1;
+}
+
+.photo-gallery .photo-gallery--image a {
+  border: none;
+}
+
+.photo-gallery .photo-gallery--image img {
+  width: 200%;
+  height: auto;
+}
+
+/**
+========================================
+Viewer
+========================================
+**/
+
+.photo-viewer {
+  width: 100%;
+  height: 100%;
+  background: #1b1b1b;
+
+  position: fixed;
+  top: 0;
+  left: -99999px;
+  z-index: 9999;
+
+  overflow: hidden;
+
+  opacity: 0;
+
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.photo-viewer--visible {
+  opacity: 1;
+  left: 0;
+}
+
+.photo-viewer--title {
+  width: 100%;
+  height: 60px;
+
+  background: rgba(0,0,0,0.75);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.photo-viewer--title h1 {
+  height: 100%;
+  margin: 0;
+
+  color: #FFF;
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 60px;
+}
+
+.photo-viewer--title .photo-viewer--close {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+
+  background: rgba(255,255,255,0.2);
+  border-radius: 40px;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 40px;
+}
+
+.photo-viewer--current-image {
+  width: auto;
+  height: 80%;
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.photo-viewer--current-image img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.photo-viewer--controls {
+  width: 100%;
+  height: 60px;
+  padding: 0 20px;
+
+  background: rgba(0,0,0,0.75);
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+
+  color: #FFF;
+  font-size: 1.2rem;
+  line-height: 60px;
+}
+
+.photo-viewer--controls .photo-viewer--previous-image {
+  width: 120px;
+  float: left;
+}
+
+.photo-viewer--controls .photo-viewer--count {
+  width: calc(100% - 240px);
+  float: left;
+
+  text-align: center;
+}
+
+.photo-viewer--controls .photo-viewer--next-image {
+  width: 120px;
+  float: right;
+
+  text-align: right;
+}
+
+

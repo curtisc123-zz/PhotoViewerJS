@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSPhoto Gallery Plugin</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/photo.css">
+  
+  <!-- JavaScript -->
+  <script src="js/photo.js"></script>
+</head>
+
+<body>
+  
+<div id="PhotoGallery" class="photo-gallery">
+  <figure class="photo-gallery--image">
+    <a href="images/1.jpg"><img src="images/1.jpg" alt="Image 1" title="Image 1 Description"></a>
+  </figure>
+  <figure class="photo-gallery--image">
+    <a href="images/2.jpg"><img src="images/2.jpg" alt="Image 2" title="Image 2 Description"></a>
+  </figure>
+  <figure class="photo-gallery--image">
+    <a href="images/3.jpg"><img src="images/3.jpg" alt="Image 3" title="Image 3 Description"></a>
+  </figure>
+  <figure class="photo-gallery--image">
+    <a href="images/4.jpg"><img src="images/4.jpg" alt="Image 4" title="Image 4 Description"></a>
+  </figure>
+  <figure class="photo-gallery--image">
+    <a href="images/5.jpg"><img src="images/5.jpg" alt="Image 5" title="Image 5 Description"></a>
+  </figure>
+</div>
+
+<div id="PhotoViewer" class="photo-viewer">
+  <header class="photo-viewer--title">
+    <h1 id="PhotoViewerTitle">Image Title</h1>
+    <div id="PhotoViewerClose" class="photo-viewer--close"><a href="#">X</a></div>
+  </header>
+  <div>
+    <figure class="photo-viewer--current-image">
+      <img id="PhotoViewerCurrentImage" src="images/1.jpg">
+    </figure>
+    <div class="photo-viewer--controls">
+      <div id="PhotoViewerPreviousImage" class="photo-viewer--previous-image"><a href="#">&laquo; Previous</a></div>
+      <div id="PhotoViewerCount" class="photo-viewer--count">1/10</div>
+      <div id="PhotoViewerNextImage" class="photo-viewer--next-image"><a href="#">Next &raquo;</a></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
