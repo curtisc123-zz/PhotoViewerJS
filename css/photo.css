@@ -7,72 +7,20 @@ March 24, 2015
 ===========================================================
 **/
 
-body {
-  padding: 0;
-  margin: 0;
-  font-size: 62.5%;
-  font-family: 'Arial';
-}
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-* {
+.photo-viewer * {
   box-sizing: border-box;
 }
 
-a {
+.photo-viewer a {
   color: #FFF;
   text-decoration: none;
 }
 
-a:hover {
+.photo-viewer a:hover {
   color: orange;
 }
-
-/**
-========================================
-Gallery
-========================================
-**/
-
-.photo-gallery {
-  width: 100%;
-  height: auto;
-
-  position: relative;
-  z-index: 1;
-}
-
-.photo-gallery:after {
-  content: '';
-  display: table;
-  clear: both;
-  width: 100%;
-}
-
-.photo-gallery .photo-gallery--image {
-  width: 300px;
-  height: 300px;
-  margin: 0;
-  overflow: hidden;
-
-  float: left;
-  position: relative;
-  z-index: 1;
-}
-
-.photo-gallery .photo-gallery--image a {
-  border: none;
-}
-
-.photo-gallery .photo-gallery--image img {
-  width: 200%;
-  height: auto;
-}
-
-/**
-========================================
-Viewer
-========================================
-**/
 
 .photo-viewer {
   width: 100%;
@@ -90,6 +38,8 @@ Viewer
 
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
+
+  font-family: 'Open Sans', Arial, sans-serif;
 }
 
 .photo-viewer--visible {
@@ -185,7 +135,7 @@ Viewer
   z-index: 20;
 
   color: #FFF;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   line-height: 60px;
 }
 

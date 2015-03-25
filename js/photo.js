@@ -2,6 +2,7 @@ var PhotoViewerPlugin = (function( document, pv ) {
 
   // Public Properties
   ////////////////////////////////////////
+  pv.ClassName = "photo";
 
   // Private Members
   ////////////////////////////////////////
@@ -25,7 +26,6 @@ var PhotoViewerPlugin = (function( document, pv ) {
   ////////////////////////////////////////
 
   pv.Initialize = function () {
-
     Init();
     SetImageLinkListeners();
 
@@ -40,7 +40,7 @@ var PhotoViewerPlugin = (function( document, pv ) {
   var Init = function () {
     images = [];
 
-    PhotoGallery = document.getElementById("PhotoGallery");
+    PhotoGallery = document.getElementsByClassName("photo");
     PhotoViewer = document.getElementById("PhotoViewer");
 
     PhotoViewerTitle = document.getElementById("PhotoViewerTitle");
@@ -54,18 +54,15 @@ var PhotoViewerPlugin = (function( document, pv ) {
   }
 
   var GetPhotos = function () {
-    var imageTags;
-
     if(images.length > 0) {
       return;
     } 
     else {
-      imageTags = PhotoGallery.getElementsByTagName("img");
-      for(var i = 0; i < imageTags.length; i++) {
+      for(var i = 0; i < PhotoGallery.length; i++) {
         var image = {
           imageIndex: i,
-          imageSrc: imageTags[i].src,
-          imageTitle: imageTags[i].title
+          imageSrc: PhotoGallery[i].href,
+          imageTitle: PhotoGallery[i].title
         }
         images.push(image);
       }
@@ -74,9 +71,8 @@ var PhotoViewerPlugin = (function( document, pv ) {
   }
 
   var SetImageLinkListeners = function () {
-    var imageLinks = PhotoGallery.getElementsByTagName("a");
-    for(i = 0; i < imageLinks.length; i++) {
-      imageLinks[i].addEventListener("click", ImageOpen);
+    for(i = 0; i < PhotoGallery.length; i++) {
+      PhotoGallery[i].addEventListener("click", ImageOpen);
     }
   }
 
