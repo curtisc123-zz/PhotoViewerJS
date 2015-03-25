@@ -2,10 +2,11 @@ var PhotoViewerPlugin = (function( document, pv ) {
 
   // Public Properties
   ////////////////////////////////////////
-  pv.ClassName = "photo";
+  
 
   // Private Members
   ////////////////////////////////////////
+  var ClassName = "photo";
 
   var images = [];
   var currentLoadedImage;
@@ -24,8 +25,14 @@ var PhotoViewerPlugin = (function( document, pv ) {
 
   // Public Methods
   ////////////////////////////////////////
+  pv.Initialize = function (className) {
+    if (className === "undefined" || className === "" || className === null) {
+      ClassName = "photo";
+    }
+    else {
+      ClassName = className;
+    }
 
-  pv.Initialize = function () {
     Init();
     SetImageLinkListeners();
 
@@ -36,11 +43,10 @@ var PhotoViewerPlugin = (function( document, pv ) {
 
   // Private Methods 
   ////////////////////////////////////////
-
   var Init = function () {
     images = [];
 
-    PhotoGallery = document.getElementsByClassName("photo");
+    PhotoGallery = document.getElementsByClassName(ClassName);
     PhotoViewer = document.getElementById("PhotoViewer");
 
     PhotoViewerTitle = document.getElementById("PhotoViewerTitle");
@@ -85,7 +91,7 @@ var PhotoViewerPlugin = (function( document, pv ) {
     GetPhotos();
     for(var i = 0; i < images.length; i++) {
       if(images[i].hasOwnProperty('imageSrc')) {
-        if(images[i].imageSrc == clickedImage) {
+        if(images[i].imageSrc === clickedImage) {
           OpenPhotoViewer(images[i]);   
         }
       }
@@ -152,6 +158,6 @@ var PhotoViewerPlugin = (function( document, pv ) {
 document.addEventListener("DOMContentLoaded", function(event) {
   
   // Launch the Photo Viewer Plugin
-  PhotoViewerPlugin.Initialize();
+  PhotoViewerPlugin.Initialize("test");
 
 });
