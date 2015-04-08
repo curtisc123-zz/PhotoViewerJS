@@ -1,8 +1,17 @@
+/**
+ * Written By: Curtis Campbell
+ * Version 0.2
+ * Pure JavaScript Photo Gallery Module, no jQuery required!
+ *
+ * Include the HTML in pages you would like the gallery to appear
+ * This will be fixed to automatically be added at a later date
+ */
+
 var PhotoViewerPlugin = (function( document, pv ) {
 
   // Public Properties
   ////////////////////////////////////////
-  
+  pv.AnimationTime = 200;
 
   // Private Members
   ////////////////////////////////////////
@@ -17,16 +26,17 @@ var PhotoViewerPlugin = (function( document, pv ) {
   var PhotoViewerTitle;
   var PhotoViewerClose;
 
+  var PhotoViewerCurrentImageContainer;
   var PhotoViewerCurrentImage;
 
-  var PhotoViewerCurrentImage;
+  var PhotoViewerPreviousImage;
   var PhotoViewerNextImage;
   var PhotoViewerCount;
 
   // Public Methods
   ////////////////////////////////////////
   pv.Initialize = function (className) {
-    if (className === "undefined" || className === "" || className === null) {
+    if ( arguments.length < 1 ) {
       ClassName = "photo";
     }
     else {
@@ -41,9 +51,11 @@ var PhotoViewerPlugin = (function( document, pv ) {
     PhotoViewerPreviousImage.addEventListener('click', LoadPreviousImage);
   }
 
-  // Private Methods 
+  // Private Methods
   ////////////////////////////////////////
   var Init = function () {
+
+
     images = [];
 
     PhotoGallery = document.getElementsByClassName(ClassName);
@@ -52,6 +64,7 @@ var PhotoViewerPlugin = (function( document, pv ) {
     PhotoViewerTitle = document.getElementById("PhotoViewerTitle");
     PhotoViewerClose = document.getElementById("PhotoViewerClose");
 
+    PhotoViewerCurrentImageContainer  = document.getElementById("PhotoViewerCurrentImageContainer");
     PhotoViewerCurrentImage = document.getElementById("PhotoViewerCurrentImage");
 
     PhotoViewerPreviousImage = document.getElementById("PhotoViewerPreviousImage");
@@ -62,7 +75,7 @@ var PhotoViewerPlugin = (function( document, pv ) {
   var GetPhotos = function () {
     if(images.length > 0) {
       return;
-    } 
+    }
     else {
       for(var i = 0; i < PhotoGallery.length; i++) {
         var image = {
@@ -72,7 +85,7 @@ var PhotoViewerPlugin = (function( document, pv ) {
         }
         images.push(image);
       }
-      
+
     }
   }
 
@@ -92,17 +105,22 @@ var PhotoViewerPlugin = (function( document, pv ) {
     for(var i = 0; i < images.length; i++) {
       if(images[i].hasOwnProperty('imageSrc')) {
         if(images[i].imageSrc === clickedImage) {
-          OpenPhotoViewer(images[i]);   
+          OpenPhotoViewer(images[i]);
         }
       }
     }
   }
 
   var SetPhotoViewerPhoto = function (currentImage) {
-    PhotoViewerCurrentImage.setAttribute('src', currentImage.imageSrc);
-    PhotoViewerTitle.innerHTML = currentImage.imageTitle;
-    PhotoViewerCount.innerHTML = currentImage.imageIndex + 1 + '/' + images.length;
-    currentLoadedImage = currentImage.imageIndex;
+    PhotoViewerCurrentImageContainer.className  = PHOTO_VIEWER_IMAGE_CLASS;
+
+    setTimeout(function(){
+        PhotoViewerCurrentImage.setAttribute('src', currentImage.imageSrc);
+        PhotoViewerTitle.innerHTML = currentImage.imageTitle;
+        PhotoViewerCount.innerHTML = currentImage.imageIndex + 1 + '/' + images.length;
+        currentLoadedImage = currentImage.imageIndex;
+        PhotoViewerCurrentImageContainer.className = PHOTO_VIEWER_IMAGE_CLASS + " " + PHOTO_VIEWER_LOADED_CLASS;
+    }, pv.AnimationTime)
   }
 
   var ToggleLoading = function (display) {
@@ -144,20 +162,18 @@ var PhotoViewerPlugin = (function( document, pv ) {
 
   // CONSTANTS
   ////////////////////////////////////////
-
-  var DEFINE_BY_CLASS_NAME = "class";
-  var DEFINE_BY_GALLERY = "gallery";
-
   var PHOTO_VIEWER_VISIBLE = " photo-viewer--visible";
   var PHOTO_VIEWER = "photo-viewer";
+  var PHOTO_VIEWER_IMAGE_CLASS = "photo-viewer--current-image";
+  var PHOTO_VIEWER_LOADED_CLASS = "loaded";
 
   return pv;
 
 }(document, PhotoViewerPlugin || {}));
 
 document.addEventListener("DOMContentLoaded", function(event) {
-  
+
   // Launch the Photo Viewer Plugin
-  PhotoViewerPlugin.Initialize("test");
+  PhotoViewerPlugin.Initialize();
 
 });
